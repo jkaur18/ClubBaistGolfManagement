@@ -37,7 +37,7 @@
         }
     </div>
 
-    @{ @if (Model.dailyteesheet != null)
+    @{ if (Model.dailyteesheet != null)
         {
             <div class="container-fluid">
                 <div class="panel panel-success">
@@ -77,7 +77,7 @@
 
                                                     <td>
                                                         @{
-                                                            @if (@teetime.Player1.FullName != null)
+                                                            if (@teetime.Player1.FullName != null)
                                                             {
                                                                 @teetime.Player1.FullName
 
@@ -91,7 +91,7 @@
                                                     </td>
                                                     <td>
                                                         @{
-                                                            @if (@teetime.Player2.FullName != null)
+                                                            if (@teetime.Player2.FullName != null)
                                                             {
                                                                 @teetime.Player2.FullName
                                                             }
@@ -103,7 +103,7 @@
                                                     </td>
                                                     <td>
                                                         @{
-                                                            @if (@teetime.Player3.FullName != null)
+                                                            if (@teetime.Player3.FullName != null)
                                                             {
                                                                 @teetime.Player3.FullName
                                                             }
@@ -115,7 +115,7 @@
                                                     </td>
                                                     <td>
                                                         @{  
-                                                            @if (@teetime.Player4.FullName != null)
+                                                            if (@teetime.Player4.FullName != null)
                                                             {
                                                                 @teetime.Player4.FullName
                                                             }
