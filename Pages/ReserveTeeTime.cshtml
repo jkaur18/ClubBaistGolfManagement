@@ -126,7 +126,7 @@
                                                         }
                                                     </td>
                                                     @if (User.IsInRole("ProShop") && @DateTime.Parse(Request.Query["date"]) == DateTime.Today)
-                                                    {
+                                                    { 
                                                         <td>
                                                             <div class="col-sm-4">
                                                                 <button class="btn btn-success"  asp-route-date="@DateTime.Parse(Request.Query["date"]).ToShortDateString()" asp-route-time="@teetime.TimeSlot.ToShortTimeString()">
