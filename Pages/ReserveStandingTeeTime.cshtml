@@ -1,0 +1,63 @@
+﻿@page
+@model ClubBaistGolfManagement.Pages.ReserveStandingTeeTimeModel
+@{
+    ViewData["Title"] = "ReserveStandingTeeTime";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Reserve Standing Tee Time</h1>
+<form method="post">
+    <div class="container-fluid">
+        <div class="panel panel-success">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div>Shareholder 1:</div>
+                            <input asp-for="Shareholder1" />
+                            <span asp-validation-for="Shareholder1"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <div> Shareholder 2:</div>
+                            <input asp-for="Shareholder2" />
+                            <span asp-validation-for="Shareholder2"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <div>Shareholder 3:</div>
+                            <input asp-for="Shareholder3" />
+                            <span asp-validation-for="Shareholder3"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <div>Shareholder 4:</div>
+                            <input asp-for="Shareholder4" />
+                            <span asp-validation-for="Shareholder4"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <div>Requested Start Date:</div>
+                            <input asp-for="RequestedStartDate".To />
+                            <span asp-validation-for="RequestedStartDate"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <div>Requested End Date:</div>
+                            <input asp-for="RequestedEndDate" />
+                            <span asp-validation-for="RequestedEndDate"></span>
+                        </div>
+                        <div class="col-sm-4">
+                            <button class="btn btn-success">Submit Request</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button class="btn btn-danger" asp-page-handler="Cancel">Cancel Request</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+

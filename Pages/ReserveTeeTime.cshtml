@@ -1,0 +1,178 @@
+﻿@page
+@model ClubBaistGolfManagement.Pages.ReserveTeeTimeModel
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    ViewData["Title"] = "ReserveTeeTime";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>ReserveTeeTime</h1>
+
+<form method="post">
+    <br />
+    <div class="container-fluid">
+        <div class="panel panel-success">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div><b>Select a Date</b></div>
+                        <br />
+                        @foreach (DateTime date in Model.ThisWeek)
+                        {
+                            <button class="btn btn-info" asp-page-handler="Find" asp-route-date="@date.ToShortDateString()">
+                                @date.ToShortDateString()
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        @if (Model.Alert != null)
+        {
+            <div class="alert alert-info" role="alert">
+                @Model.Alert
+            </div>
+        }
+    </div>
+
+    @{ @if (Model.dailyteesheet != null)
+        {
+            <div class="container-fluid">
+                <div class="panel panel-success">
+                    <div class="panel-body">
+                        <div style="height:800px; width: 1300px; overflow-y:scroll">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <br />
+                                    <div><b><u>Daily Tee Sheet for @Model.Date.ToShortDateString()</u></b></div>
+                                    <br />
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th>Timeslot</th>
+                                            <th>Player1 Name</th>
+                                            <th>Player2 Name</th>
+                                            <th>Player3 Name</th>
+                                            <th>Player4 Name</th>
+                                            @if (User.IsInRole("ProShop") && @DateTime.Parse(Request.Query["date"]) == DateTime.Today)
+                                            {
+                                                <th>Reserve</th>
+                                                <th>Cancel</th>
+                                            }
+                                            else if (!(@DateTime.Parse(Request.Query["date"]) == DateTime.Today) && !(User.IsInRole("ProShop")))
+                                            {
+                                                <th>Reserve</th>
+                                                <th>Cancel</th>
+                                            }
+                                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Pro Shop"))
+                                            {                                                <th>Check In</th>
+
+                                            }
+                                        </tr>
+                                        @{ foreach (var teetime in @Model.dailyteesheet)
+                                            {
+                                                <tr>
+                                                    <td>@teetime.TimeSlot.ToShortTimeString()</td>
+
+                                                    <td>
+                                                        @{
+                                                            @if (@teetime.Player1.FullName != null)
+                                                            {
+                                                                @teetime.Player1.FullName
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <input asp-for="player1Name" />
+                                                                <span asp-validation-for="player1Name" />
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            @if (@teetime.Player2.FullName != null)
+                                                            {
+                                                                @teetime.Player2.FullName
+                                                            }
+                                                            else
+                                                            {
+                                                                <input asp-for="player2Name" />
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            @if (@teetime.Player3.FullName != null)
+                                                            {
+                                                                @teetime.Player3.FullName
+                                                            }
+                                                            else
+                                                            {
+                                                                <input asp-for="player3Name" />
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            @if (@teetime.Player4.FullName != null)
+                                                            {
+                                                                @teetime.Player4.FullName
+                                                            }
+                                                            else
+                                                            {
+                                                                <input asp-for="player4Name" />
+                                                            }
+                                                        }
+                                                    </td>
+                                                    @if (User.IsInRole("ProShop") && @DateTime.Parse(Request.Query["date"]) == DateTime.Today)
+                                                    {
+                                                        <td>
+                                                            <div class="col-sm-4">
+                                                                <button class="btn btn-success"  asp-route-date="@DateTime.Parse(Request.Query["date"]).ToShortDateString()" asp-route-time="@teetime.TimeSlot.ToShortTimeString()">
+                                                                    Reserve
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <a asp-page="./CancelPage" class=" btn btn-success" asp-route-time="@teetime.TimeSlot.ToShortTimeString()" asp-route-date="@Model.Date.ToShortDateString()"> 
+                                                                Cancel</a>
+                                                            </td>
+                                                    }
+                                                    else if (!(@DateTime.Parse(Request.Query["date"]) == DateTime.Today) && !(User.IsInRole("ProShop")))
+                                                    {
+                                                        <td>
+                                                            <div class="col-sm-4">
+                                                                <button class="btn btn-success" asp-route-date="@DateTime.Parse(Request.Query["date"]).ToShortDateString()" asp-route-time="@teetime.TimeSlot.ToShortTimeString()">
+                                                                    Reserve
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <a asp-page="./CancelPage" class=" btn btn-success" asp-route-time="@teetime.TimeSlot.ToShortTimeString()" asp-route-date="@Model.Date.ToShortDateString()"> 
+                                                            Cancel</a>
+                                                        </td>
+                                                    }
+                                                    
+                                                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Pro Shop"))
+                                                    {
+                                                <td>
+                                                    <a asp-page="./CheckInPlayer" class=" btn btn-success"   asp-route-time="@teetime.TimeSlot.ToShortTimeString()" asp-route-date="@Model.Date.ToShortDateString()"> CheckIn</a>
+                                                
+                                                    </td>
+                                                    }
+
+                                                </tr>
+                                            }
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</form>

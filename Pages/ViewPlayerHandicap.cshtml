@@ -1,0 +1,19 @@
+﻿@page
+@model ClubBaistGolfManagement.Pages.ViewPlayerHandicap
+
+@{
+    ViewData["Title"] = "View Player Handicap";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<div class="container-fluid">
+    <table class="table table-striped">
+        <legend>Player Handicap Factor</legend>
+        <tr>
+            <b>Player Name:</b>&nbsp;@Model.authenticatedUser.FullName
+        </tr><br />
+        <tr>
+            <b>Handicap Factor:</b>&nbsp; @Model.PlayerHandicap
+        </tr>
+    </table>
+</div>
+

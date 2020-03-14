@@ -1,0 +1,89 @@
+﻿@page
+@using ClubBaistGolfManagement.Domain
+@model ClubBaistGolfManagement.Pages.CheckInPlayerModel
+@{
+    ViewData["Title"] = "Check In Player";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Check In Player</h1>
+
+<form method="post">
+    <a asp-page="./ReserveTeeTime" class="btn btn-info" role="button">View Daily Tee Sheet</a>
+    <br />
+    <br />
+    <p>Tee Time: @Model.selectedteetime.TimeSlot.ToShortTimeString()</p>
+
+    <p>Date: @Model.selectedteetime.Date.ToShortDateString()</p>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Player Name</th>
+            <th>CheckIn</th>
+        </tr>
+        <tr>
+            @if (@Model.selectedteetime.Player1.FullName != null)
+            {
+                <td>
+                    @Model.selectedteetime.Player1.FullName
+                </td>
+
+                <td>
+                   
+                        <input asp-for="player1checked" />
+                    
+                </td>
+            }
+
+        </tr>
+        <tr>
+            @if (@Model.selectedteetime.Player2.FullName != null)
+            {
+                <td>
+                    @Model.selectedteetime.Player2.FullName
+                </td>
+                <td>
+                        <input asp-for="player2checked" />
+
+                </td>
+            }
+
+        </tr>
+        <tr>
+            @if (@Model.selectedteetime.Player3.FullName != null)
+            {
+                <td>
+                    @Model.selectedteetime.Player3.FullName
+                </td>
+                <td>@*
+
+                    @if (@Model.selectedteetime.Player3CheckedIn)
+                    {
+                        <p>Checked In</p>
+                    }
+                    else
+                    {*@
+                        <input asp-for="player3checked" />
+                    
+
+                </td>
+            }
+
+        </tr>
+        <tr>
+            @if (@Model.selectedteetime.Player4.FullName != null)
+            {
+                <td>
+                    @Model.selectedteetime.Player4.FullName
+                </td>
+                <td>
+                        <input asp-for="player4checked" />
+                    
+                </td>
+            }
+        </tr>
+
+    </table>
+
+    <button type="submit" class="btn btn-success">Check In Players</button>
+</form>

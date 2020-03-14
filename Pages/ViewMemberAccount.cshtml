@@ -1,0 +1,42 @@
+﻿@page
+@model ClubBaistGolfManagement.Pages.ViewMemberAccount
+
+@{
+    ViewData["Title"] = "View Member Account";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<h1>View Member Account</h1>
+
+<form method="post">
+    <div class="container-fluid">
+        <table class="table table-striped">
+            <tr>
+                <legend>Account Details</legend>
+                <hr/>
+                <td>
+                    <b>Member Name:</b> @Model.authenticatedUser.FullName
+                </td>
+                <td>
+                    <b>Account Balance:</b> @Model.SelectedMemberAccount.Balance
+                </td>
+            </tr>
+        </table>
+        <table class="table table-striped">
+            <tr>
+                <th>When Charged (Date/Time)</th>
+                <th>When Posted (Date/Time)</th>
+                <th>Payment Description</th>
+                <th>Amount</th>
+            </tr>
+                @foreach (var memberAccountEntry in Model.SelectedMemberAccount.AccountEntries)
+                {
+                    <tr>
+                        <td>@memberAccountEntry.WhenCharged</td>
+                        <td>@memberAccountEntry.WhenMade</td>
+                        <td>@memberAccountEntry.PaymentDescription</td>
+                        <td>@memberAccountEntry.Amount</td>
+                    </tr>
+                }
+        </table>
+    </div>
+</form>

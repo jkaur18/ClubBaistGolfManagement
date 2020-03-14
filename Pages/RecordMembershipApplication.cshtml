@@ -1,0 +1,202 @@
+﻿@page
+@model ClubBaistGolfManagement.Pages.RecordMembershipApplication
+
+@{
+    ViewData["Title"] = "Record Membership Application";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<style>       
+    input[type=text]
+    {
+    width:300px;
+    float: right;
+    text-align:left;    
+    }
+</style>
+
+<h1>Submit Membership Application</h1>
+<div>
+        @if (Model.Alert != null)
+        {
+            <div class="alert alert-info" role="alert">
+                @Model.Alert
+            </div>
+        }
+    </div>
+<form method="post" >
+    <div class="container-fluid">
+        <table>
+                <tr>
+                    <td>
+                        <label> Last Name:</label>
+                    </td>
+                    <td>
+                        <input asp-for="LastName"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                        <label>First Name:</label>
+                    </td>
+                    <td>
+                        <input asp-for="FirstName"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                        <label>Address:</label>
+                    </td>
+                    <td>
+                        <input asp-for="Address"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                        <label>Postal Code:</label>
+                    </td>
+                    <td>
+                        <input asp-for="PostalCode"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                        <label>City:</label>
+                    </td>
+                    <td>
+                         <input asp-for="City"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                        <label>Date of Birth:</label>
+                    </td>
+                    <td>
+                        <input asp-for="DateofBirth"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                         <label>Email:</label>
+                    </td>
+                    <td>
+                        <input asp-for="Email"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                        <label>Phone:</label>
+                    </td>
+                    <td>
+                        <input asp-for="Phone"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                        <label>Alternate Phone:</label>
+                    </td>
+                    <td>
+                        <input asp-for="AlternatePhone"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                         <label>Occupation:</label>
+                    </td>
+                    <td>
+                         <input asp-for="Occupation"/><br/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                        <label>Company Name:</label>
+                    </td>
+                    <td>
+                        <input asp-for="CompanyName"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                        <label>CompanyAddress:</label>
+                    </td>
+                    <td>
+                        <input asp-for="CompanyAddress"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                        <label>Company Postal Code:</label>
+                    </td>
+                    <td>
+                         <input asp-for="CompanyPostalCode"/>
+                    </td>
+                   
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                         <label>Company City:</label>
+                    </td>
+                    <td>
+                        <input asp-for="CompanyCity"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    
+                    <td>
+                        <label>Company Phone:</label>
+                    </td>
+                    <td>
+                        <input asp-for="CompanyPhone"/>
+                    </td>
+                </tr>
+                                <br/>
+                <tr>
+                    <td>
+                        <label>Shareholder 1 :</label>
+                    </td>
+                    <td>
+                        <input asp-for="Shareholder1"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                        <label>Shareholder 2:</label>
+                    </td>
+                    <td>
+                        <input asp-for="Shareholder2"/>
+                    </td>
+                </tr>
+                <br/>
+                <tr>
+                    <td>
+                        <label>Membership Type:</label>
+                    </td>
+                    <td>
+                        <input asp-for="MembershipType"/>
+                    </td>
+                </tr>
+                <br/>
+                <br/>
+                <tr>
+                    <td>
+                         <button type="submit" class="btn btn-success">Submit Application</button>
+                    </td>
+                </tr>
+            </table>
+    </div>
+    
+</form>

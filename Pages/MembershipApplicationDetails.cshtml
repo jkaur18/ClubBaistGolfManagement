@@ -1,0 +1,76 @@
+﻿@page
+@model ClubBaistGolfManagement.Pages.MembershipApplicationDetails
+
+@{
+    ViewData["Title"] = "Membership Application Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<h1>Membership Application Details</h1>
+<br/>
+<br/>
+<form method="post">
+    <table class="table table-striped">
+        <tr><legend>Membership Type:&nbsp;@Model.chosenMembershipApplication.MembershipType</legend></tr>
+            <tr>
+                <td>
+                    <fieldset>
+                        <legend>Member Details</legend>
+                        <hr/>
+                        <text>
+                            <b>First Name:</b> @Model.chosenMembershipApplication.FirstName <br/>
+                            <b>Last Name:</b> @Model.chosenMembershipApplication.LastName<br/>
+                            <b>Address:</b> @Model.chosenMembershipApplication.Address<br/>
+                            <b>City:</b> @Model.chosenMembershipApplication.City<br/>
+                            <b>Postal Code:</b> @Model.chosenMembershipApplication.PostalCode<br/>
+                            <b>Phone:</b> @Model.chosenMembershipApplication.Phone<br/>
+                            <b>Alternate Phone:</b> @Model.chosenMembershipApplication.AlternatePhone<br/>
+                            <b>Date of Birth:</b> @Model.chosenMembershipApplication.DateofBirth.ToShortDateString()<br/>
+                            <b>Email:</b> @Model.chosenMembershipApplication.Email<br/>
+                        </text>
+                    </fieldset>
+                </td>
+                <td>
+                    <fieldset>
+                        <legend>Work Details</legend>
+                        <hr/>
+                            <text>
+                                <b>Occupation: </b>@Model.chosenMembershipApplication.Occupation <br/>
+                                <b>Company Name:</b> @Model.chosenMembershipApplication.CompanyName<br/>
+                                <b>Address: </b>@Model.chosenMembershipApplication.CompanyAddress<br/>
+                                <b>City:</b> @Model.chosenMembershipApplication.CompanyCity<br/>
+                                <b>Postal Code:</b> @Model.chosenMembershipApplication.CompanyPostalCode<br/>
+                                <b>Phone:</b> @Model.chosenMembershipApplication.CompanyPostalCode<br/>
+                            </text>
+                        </fieldset>
+                </td>
+            </tr>
+    </table>
+    
+    <table class="table table-striped">
+        <tr>
+            <legend>Sponsors</legend>
+        <hr />
+        <tr>
+            <text>
+                <b>First Sponsor: </b>@Model.chosenMembershipApplication.Shareholder1<br/>
+                <b>Second Sponsor:</b> @Model.chosenMembershipApplication.Shareholder2<br/>
+            </text>
+        </tr>
+        <br />
+        <br />
+        <tr>
+            <button class="btn btn-success" asp-page-handler="Approve" asp-route-applicationid="@Model.chosenMembershipApplication.MembershipApplicationId">
+                Approve
+            </button>
+            &nbsp;&nbsp;
+            <button class="btn btn-warning" asp-page-handler="Waitlist" asp-route-applicationid="@Model.chosenMembershipApplication.MembershipApplicationId">
+                Waitlist
+            </button>
+            &nbsp;&nbsp;
+            <button class="btn btn-danger" asp-page-handler="Cancel" asp-route-applicationid="@Model.chosenMembershipApplication.MembershipApplicationId">
+                Cancel
+            </button>
+        </tr>
+    </table>
+</form>
+

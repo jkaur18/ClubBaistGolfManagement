@@ -1,0 +1,65 @@
+﻿@page
+@model ClubBaistGolfManagement.Pages.CancelPage
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Cancel Tee Time";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<form method="post">
+    <a asp-page="./ReserveTeeTime" class="btn btn-info" role="button">View Daily Tee Sheet</a>
+    <br />
+    <br />
+    <p>Tee Time: @Model.selectedteetime.TimeSlot.ToShortTimeString()</p>
+
+    <p>Date: @Model.selectedteetime.Date.ToShortDateString()</p>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Player Name</th>
+        </tr>
+        <tr>
+            @if (@Model.selectedteetime.Player1 != null)
+            {
+                <td>
+                    @Model.selectedteetime.Player1.FullName
+                </td>
+            }
+
+        </tr>
+        <tr>
+            @if (@Model.selectedteetime.Player2 != null)
+            {
+                <td>
+                    @Model.selectedteetime.Player2.FullName
+                </td>
+            }
+
+        </tr>
+        <tr>
+            @if (@Model.selectedteetime.Player3 != null)
+            {
+                <td>
+                    @Model.selectedteetime.Player3.FullName
+                </td>
+            }
+
+        </tr>
+        <tr>
+            @if (@Model.selectedteetime.Player4 != null)
+            {
+                <td>
+                    @Model.selectedteetime.Player4.FullName
+                </td>
+            }
+        </tr>
+
+    </table>
+    @if (@Model.authenticatedUser.Id == @Model.selectedteetime.BookerNumber || SignInManager.IsSignedIn(User) && User.IsInRole("Pro Shop") || SignInManager.IsSignedIn(User) && User.IsInRole("Clerk"))
+    {
+        <button type="submit" class="btn btn-success">Cancel Tee Time</button>
+    }
+    
+</form>

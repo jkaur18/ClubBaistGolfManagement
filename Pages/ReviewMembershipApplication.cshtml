@@ -1,0 +1,44 @@
+﻿@page
+@model ClubBaistGolfManagement.Pages.ReviewMembershipApplication
+
+@{
+    ViewData["Title"] = "Review Membership Application";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<h1>Review Membership Applications</h1>
+
+<div>
+        @if (Model.Alert != null)
+        {
+            <div class="alert alert-info" role="alert">
+                @Model.Alert
+            </div>
+        }
+    </div>
+<form method="post">
+    <div class="container-fluid">
+        <table class="table table-striped">
+            <tr>
+                <th>Application ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Membership Type</th>
+                <th>Application Status</th>
+                <th>Review</th>
+            </tr>
+            @foreach (var application in Model.newmembershipapplications)
+            {
+                <tr>
+                    <td>@application.MembershipApplicationId</td>
+                    <td>@application.FirstName</td>
+                    <td>@application.LastName</td>
+                    <td>@application.MembershipType</td>
+                    <td>@application.ApplicationStatus</td>
+                    <td>
+                        <a asp-page="./MembershipApplicationDetails" class=" btn btn-success" asp-route-membershipid="@application.MembershipApplicationId" >Details</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</form>

@@ -1,0 +1,68 @@
+﻿@page
+@model ClubBaistGolfManagement.Pages.AddPlayerScores
+
+@{
+    ViewData["Title"] = "Add Player Scores";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Add Player Scores</h1>
+
+<div>
+        @if (Model.Alert != null)
+        {
+            <div class="alert alert-info" role="alert">
+                @Model.Alert
+            </div>
+        }
+    </div>
+
+<form method="post">
+    <br/>
+    <legend> Score Card </legend>
+    <br/>
+    <div class="form-group">
+        <label asp-for="Course">Golf Course:</label>
+        <input asp-for="Course" />
+        <span asp-validation-for="Course" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DayofGame">Date:</label>
+        <input asp-for="DayofGame"/>
+        <span asp-validation-for="DayofGame" class="text-danger"></span>
+    </div>
+    @{
+        var i = 0;
+    @foreach (var round in Model.rounds)
+    {
+        <div><span asp-validation-for="rounds[i].Rating" class="text-danger"></span></div>
+        <div><span asp-validation-for="rounds[i].Slope" class="text-danger"></span></div>
+        <div><span asp-validation-for="rounds[i].Score" class="text-danger"></span></div>
+         i++; 
+    }
+
+    }
+    <table class="table">
+        <tr>
+            <th>Hole</th>
+            <th>Course Rating</th>
+            <th>Course Slope</th>
+            <th>Score</th>
+        </tr>
+        @{
+             i = 0;
+            foreach (var round in Model.rounds)
+            {
+                <tr>
+                    <td>@round.Hole<input asp-for="rounds[i].Hole" hidden="hidden"/></td>
+                    <td><input asp-for="rounds[i].Rating"/></td>
+                    <td><input asp-for="rounds[i].Slope"/></td>
+                    <td><input asp-for="rounds[i].Score"/></td>
+                    @{ i++; } 
+                </tr>
+            }
+        }
+    </table>
+    <button type="submit" class="btn btn-success">Submit Scorecard</button>
+</form>
