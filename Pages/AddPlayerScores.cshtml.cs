@@ -8,9 +8,11 @@ using ClubBaistGolfManagement.Domain;
 using ClubBaistGolfManagement.TechnicalServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ClubBaistGolfManagement.Pages
 {
+    [Authorize]
     [BindProperties]
     public class AddPlayerScores : PageModel
     {

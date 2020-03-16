@@ -7,13 +7,17 @@
 <h1>SubmitStandingTeeTime</h1>
 
 <form method="post">
-    <br />
+    
     <div class="container-fluid">
+        <div>
+            <a asp-page="./ReserveStandingTeeTime" class="btn btn-info" role="button">My Standing Tee Time Request</a>
+            </div>
+            <br/>
         <div class="panel panel-success">
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-12">
-                     <div><b><u>Pick a day to submit Standing Tee Time Request</u></b></div>
+                        <div><b><u>Pick a day to submit Standing Tee Time Request</u></b></div>
                         @foreach (string day in Model.ThisWeek)
                         {
                             <button class="btn btn-info" asp-route-day="@day">@day</button>
@@ -23,8 +27,8 @@
             </div>
         </div>
     </div>
-    <br />
-    <br />
+    <br/>
+    <br/>
     <div>
         @if (Model.Alert != null)
         {
@@ -50,14 +54,17 @@
                                             <th>Timeslot</th>
                                             <th>Submit Request</th>
                                         </tr>
-                           @{ foreach (var standing in @Model.DailyStandingTeeTimeRequests)
+                                        @{
+                                            foreach (var standing in @Model.DailyStandingTeeTimeRequests)
                                             {
                                                 <tr>
                                                     <td>@standing.DayofWeek.ToString()</td>
                                                     <td>@standing.RequestedTime.ToShortTimeString()</td>
                                                     <td>
                                                         <a asp-page="./ReserveStandingTeeTime"
-                                                           asp-route-time="@standing.RequestedTime.ToShortTimeString()" asp-route-day="@standing.DayofWeek.ToString()" class="btn btn-info" role="button">Select</a>
+                                                           asp-route-time="@standing.RequestedTime.ToShortTimeString()" 
+                                                           asp-route-day="@standing.DayofWeek.ToString()" 
+                                                           class="btn btn-info" role="button">Select</a>
                                                     </td>
                                                 </tr>
                                             }

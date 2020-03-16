@@ -116,16 +116,17 @@ namespace ClubBaistGolfManagement.TechnicalServices
                     };
 
                     DateTime timeslot = teetime.TimeSlot;
+                    
 
                     if ((teetime.Date.DayOfWeek == DayOfWeek.Saturday) || (teetime.Date.DayOfWeek == DayOfWeek.Sunday))
                     {
-                        if (timeslot >= authenticatedUser.WeekendRestrictedBefore)
+                        if (timeslot.TimeOfDay >= authenticatedUser.WeekendRestrictedBefore.TimeOfDay)
                             dailyteesheet.Add(teetime);
                     }
                     else
                     {
-                        if (!(authenticatedUser.WeekdayRestrictedBefore > timeslot
-                            && authenticatedUser.WeekdayRestrictedAfter < timeslot))
+                        if (!(authenticatedUser.WeekdayRestrictedBefore.TimeOfDay > timeslot.TimeOfDay
+                            && authenticatedUser.WeekdayRestrictedAfter.TimeOfDay < timeslot.TimeOfDay))
                             dailyteesheet.Add(teetime);
                     }
                 }

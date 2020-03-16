@@ -89,7 +89,7 @@ Create Table GolfRounds
 	Constraint FK_GolfRounds Foreign Key (PlayerNumber) References AspNetUsers(Id)
 )
 
-
+/* Stored Procedures */
 
 go
 Create or Alter procedure AddTeeTime(@Date Date, @TimeSlot Time, @player1 nvarchar(450), @player2 nvarchar(450)=NULL, @player3 nvarchar(450)=NULL, @player4 nvarchar(450)=NULL, @booker nvarchar(50))
@@ -124,6 +124,34 @@ Declare @ReturnCode int
 
 	go
 Create or Alter procedure CancelTeeTime(@Date Date, @TimeSlot Time)
+As
+Declare @ReturnCode int
+	Set @ReturnCode = 1
+
+	IF @Date IS NULL
+		RAISERROR ('Cancel TeeTime - Required parameter: @Date',16,1)	
+	Else IF @TimeSlot IS NULL
+		RAISERROR ('Cancel TeeTime - Required parameter: @TimeSlot',16,1)	
+	Else
+	Begin
+		UPDATE TeeTime
+			Set Player1Number = null,
+				Player2Number = null,
+				Player3Number = null,
+				Player4Number = null,
+				BookerNumber = null
+			WHERE [Date] = @Date AND TimeSlot = @TimeSlot
+
+		If @@ERROR = 0 
+				Set @ReturnCode = 0
+			Else
+		RaisError('Cancel tee time - Update error from tee time database',16,1)
+		Return @ReturnCode
+	End
+	
+	
+		go
+Create or Alter procedure CancelStandingTeeTime(@Date Date, @TimeSlot Time)
 As
 Declare @ReturnCode int
 	Set @ReturnCode = 1
@@ -192,10 +220,11 @@ AS
 		where
 		Date = (Select convert(Varchar(10),getdate(),111))
 	and TimeSlot = (Select RequestedTeeTime from GetUser where Rownumber = @counter )
-
 End
 
-	
+	Select * from StandingTeeTimeRequest
+	Delete from TeeTime
+	Select * from TeeTime
 	
 	exec GenerateDailyTeeSheet 0
 
@@ -212,6 +241,7 @@ End
 	exec GenerateDailyTeeSheet 6
 
 	exec GenerateDailyTeeSheet 7
+
 
 	
 

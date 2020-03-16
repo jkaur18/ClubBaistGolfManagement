@@ -72,9 +72,7 @@ namespace ClubBaistGolfManagement.Pages
             
             authenticatedUser = UserManager.GetUser(UserManager.GetUserIdFromEmail(User.Identity.Name));
             dailyteesheet = RequestDirector.ViewDailyTeeSheet(chosenDate, authenticatedUser);
-        }       
-
-
+        }
         public ActionResult OnPost()
         {
             if (!ModelState.IsValid) return Page();

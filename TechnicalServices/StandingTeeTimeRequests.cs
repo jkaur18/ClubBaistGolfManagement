@@ -283,7 +283,7 @@ namespace ClubBaistGolfManagement.TechnicalServices
             SqlCommand thecommand = new SqlCommand();
             thecommand.CommandType = CommandType.StoredProcedure;
             thecommand.Connection = ClubBaistConnection;
-            thecommand.CommandText = "AddStandingTeeTime";
+            thecommand.CommandText = "CancelStandingTeeTime";
 
             //dayofweek
             SqlParameter day = new SqlParameter();

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ClubBaistGolfManagement.Pages
 {
+    [Authorize]
     public class ViewPlayerHandicap : PageModel
     {
         [TempData] public string Alert { get; set; }

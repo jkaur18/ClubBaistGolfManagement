@@ -19,9 +19,19 @@
                         <br />
                         @foreach (DateTime date in Model.ThisWeek)
                         {
-                            <button class="btn btn-info" asp-page-handler="Find" asp-route-date="@date.ToShortDateString()">
-                                @date.ToShortDateString()
-                            </button>
+                            if (SignInManager.IsSignedIn(User) && User.IsInRole("Pro Shop"))
+                            {
+                                <button class="btn btn-info" asp-page-handler="Find" asp-route-date="@date.ToShortDateString()">
+                                    @date.ToShortDateString()
+                                </button>
+                                break;
+                            }
+                            else
+                            {
+                                <button class="btn btn-info" asp-page-handler="Find" asp-route-date="@date.ToShortDateString()">
+                                    @date.ToShortDateString()
+                                </button>
+                            }
                         }
                     </div>
                 </div>
@@ -55,19 +65,19 @@
                                             <th>Player2 Name</th>
                                             <th>Player3 Name</th>
                                             <th>Player4 Name</th>
-                                            @if (User.IsInRole("ProShop") && @DateTime.Parse(Request.Query["date"]) == DateTime.Today)
+                                            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Pro Shop") && @DateTime.Parse(Request.Query["date"]) == DateTime.Today)
                                             {
                                                 <th>Reserve</th>
                                                 <th>Cancel</th>
                                             }
-                                            else if (!(@DateTime.Parse(Request.Query["date"]) == DateTime.Today) && !(User.IsInRole("ProShop")))
+                                            else if (!(@DateTime.Parse(Request.Query["date"]) == DateTime.Today) && SignInManager.IsSignedIn(User) && !(User.IsInRole("Pro Shop")))
                                             {
                                                 <th>Reserve</th>
                                                 <th>Cancel</th>
                                             }
                                             @if (SignInManager.IsSignedIn(User) && User.IsInRole("Pro Shop"))
-                                            {                                                <th>Check In</th>
-
+                                            {
+                                                <th>Check In</th>
                                             }
                                         </tr>
                                         @{ foreach (var teetime in @Model.dailyteesheet)
@@ -114,32 +124,18 @@
                                                         }
                                                     </td>
                                                     <td>
-                                                        @{  
+                                                        @{
                                                             if (@teetime.Player4.FullName != null)
                                                             {
                                                                 @teetime.Player4.FullName
                                                             }
-                                                            else 
+                                                            else
                                                             {
                                                                 <input asp-for="player4Name" />
                                                             }
                                                         }
                                                     </td>
-                                                    @if (User.IsInRole("ProShop") && @DateTime.Parse(Request.Query["date"]) == DateTime.Today)
-                                                    { 
-                                                        <td>
-                                                            <div class="col-sm-4">
-                                                                <button class="btn btn-success"  asp-route-date="@DateTime.Parse(Request.Query["date"]).ToShortDateString()" asp-route-time="@teetime.TimeSlot.ToShortTimeString()">
-                                                                    Reserve
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <a asp-page="./CancelPage" class=" btn btn-success" asp-route-time="@teetime.TimeSlot.ToShortTimeString()" asp-route-date="@Model.Date.ToShortDateString()"> 
-                                                                Cancel</a>
-                                                            </td>
-                                                    }
-                                                    else if (!(@DateTime.Parse(Request.Query["date"]) == DateTime.Today) && !(User.IsInRole("ProShop")))
+                                                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Pro Shop") && (Model.chosenDate == DateTime.Today))
                                                     {
                                                         <td>
                                                             <div class="col-sm-4">
@@ -149,19 +145,29 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <a asp-page="./CancelPage" class=" btn btn-success" asp-route-time="@teetime.TimeSlot.ToShortTimeString()" asp-route-date="@Model.Date.ToShortDateString()"> 
-                                                            Cancel</a>
+                                                            <a asp-page="./CancelPage" class=" btn btn-success" asp-route-time="@teetime.TimeSlot.ToShortTimeString()" asp-route-date="@Model.Date.ToShortDateString()">
+                                                                Cancel
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a asp-page="./CheckInPlayer" class=" btn btn-success" asp-route-time="@teetime.TimeSlot.ToShortTimeString()" asp-route-date="@Model.Date.ToShortDateString()"> CheckIn</a>
                                                         </td>
                                                     }
-                                                    
-                                                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Pro Shop"))
+                                                    else if (!(Model.chosenDate == DateTime.Today) && SignInManager.IsSignedIn(User) && !(User.IsInRole("Pro Shop")))
                                                     {
-                                                <td>
-                                                    <a asp-page="./CheckInPlayer" class=" btn btn-success"   asp-route-time="@teetime.TimeSlot.ToShortTimeString()" asp-route-date="@Model.Date.ToShortDateString()"> CheckIn</a>
-                                                
-                                                    </td>
+                                                        <td>
+                                                            <div class="col-sm-4">
+                                                                <button class="btn btn-success" asp-route-date="@DateTime.Parse(Request.Query["date"]).ToShortDateString()" asp-route-time="@teetime.TimeSlot.ToShortTimeString()">
+                                                                    Reserve
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <a asp-page="./CancelPage" class=" btn btn-success" asp-route-time="@teetime.TimeSlot.ToShortTimeString()" asp-route-date="@Model.Date.ToShortDateString()">
+                                                                Cancel
+                                                            </a>
+                                                        </td>
                                                     }
-
                                                 </tr>
                                             }
                                         }
