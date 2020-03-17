@@ -89,7 +89,7 @@
                             <div class="dropdown">
                                 <a class="nav-link text-dark">Memberships</a>
                                 <div class="dropdown-content">
-                                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Membership Committee") )
+                                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("MembershipCommittee") )
                                     {
                                         <a asp-page="/RecordMembershipApplication">Submit Membership Application </a>
                                         <a asp-page="/ReviewMembershipApplication">View Membership Application</a>

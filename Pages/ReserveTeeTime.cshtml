@@ -46,8 +46,8 @@
             </div>
         }
     </div>
-
-    @{ if (Model.dailyteesheet != null)
+    @{ 
+        if (Model.dailyteesheet != null)
         {
             <div class="container-fluid">
                 <div class="panel panel-success">
@@ -58,7 +58,7 @@
                                     <br />
                                     <div><b><u>Daily Tee Sheet for @Model.Date.ToShortDateString()</u></b></div>
                                     <br />
-                                    <table class="table table-striped">
+                                    <table class="table table-responsive">
                                         <tr>
                                             <th>Timeslot</th>
                                             <th>Player1 Name</th>
@@ -95,7 +95,6 @@
                                                             else
                                                             {
                                                                 <input asp-for="player1Name" />
-                                                                <span asp-validation-for="player1Name" />
                                                             }
                                                         }
                                                     </td>

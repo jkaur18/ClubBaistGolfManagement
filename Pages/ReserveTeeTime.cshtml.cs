@@ -52,7 +52,6 @@ namespace ClubBaistGolfManagement.Pages
             getDatesForThisWeek();
             authenticatedUser = UserManager.GetUser(UserManager.GetUserIdFromEmail(User.Identity.Name));
         }
-
         private void getDatesForThisWeek()
         {
             for (int i = 0; i < 7; i++)
@@ -68,9 +67,8 @@ namespace ClubBaistGolfManagement.Pages
         public void OnPostFind()
         {
             getDatesForThisWeek();
-            chosenDate = DateTime.Parse(Request.Query["date"]);
-            
             authenticatedUser = UserManager.GetUser(UserManager.GetUserIdFromEmail(User.Identity.Name));
+            chosenDate = DateTime.Parse(Request.Query["date"]);
             dailyteesheet = RequestDirector.ViewDailyTeeSheet(chosenDate, authenticatedUser);
         }
         public ActionResult OnPost()
@@ -80,36 +78,57 @@ namespace ClubBaistGolfManagement.Pages
             chosenTime = DateTime.Parse(Request.Query["time"]);
             chosenDate = DateTime.Parse(Request.Query["date"]);
             chosenteetime = RequestDirector.FindTeeTime(chosenDate,chosenTime);
-            
-            // Assign the booker to TeeTime
-            if (chosenteetime.BookerNumber == "" || chosenteetime.BookerNumber == " " ||
-                chosenteetime.BookerNumber == null)
+            if (string.IsNullOrEmpty(chosenteetime.Player1.FullName) && string.IsNullOrEmpty(player1Name) )
             {
-                chosenteetime.BookerNumber = UserManager.GetUserIdFromEmail(User.Identity.Name);
+                Alert = $"Please enter player 1 name to proceed!";
             }
+            else if (chosenteetime.Player1.FullName !=null && string.IsNullOrEmpty(chosenteetime.Player2.FullName) && string.IsNullOrEmpty(player2Name))
+            {
+                Alert = $"Please enter player 2 name to proceed!";
+            }
+            else if (chosenteetime.Player1.FullName != null && chosenteetime.Player2.FullName != null
+                                                   && string.IsNullOrEmpty(chosenteetime.Player3.FullName) &&
+                                                   string.IsNullOrEmpty(player3Name))
+            {
+                Alert = $"Please enter player 3 to proceed!";
+            }
+            else if (chosenteetime.Player1.FullName != null && chosenteetime.Player2.FullName != null && chosenteetime.Player3.FullName != null
+                     && string.IsNullOrEmpty(chosenteetime.Player4.FullName) &&
+                     string.IsNullOrEmpty(player4Name))
+            {
+                Alert = $"Please enter player 4 to proceed!";
+            }
+            else
+            {
+                // Assign the booker to TeeTime
+                if (chosenteetime.BookerNumber == "" || chosenteetime.BookerNumber == " " ||
+                    chosenteetime.BookerNumber == null)
+                {
+                    chosenteetime.BookerNumber = UserManager.GetUserIdFromEmail(User.Identity.Name);
+                }
               
-            if (chosenteetime.Player1 != null && player1Name != null)
-            {
-                chosenteetime.Player1 = (Player) UserManager.GetUser(UserManager.GetUserId(player1Name));
-            }
-            if (chosenteetime.Player2 !=null && player2Name != null)
-            {
-                chosenteetime.Player2 = (Player)UserManager.GetUser(UserManager.GetUserId(player2Name));
-            }
-            if (chosenteetime.Player3 != null && player3Name != null) 
-            {
-                chosenteetime.Player3 = (Player)UserManager.GetUser(UserManager.GetUserId(player3Name));
-            }
-            if (chosenteetime.Player4 != null && player4Name != null)
-            {
-                chosenteetime.Player4 = (Player)UserManager.GetUser(UserManager.GetUserId(player4Name));
-            }
-            
-            Confirmation = RequestDirector.ReserveTeeTime(chosenteetime);
+                if (chosenteetime.Player1 != null && player1Name != null)
+                {
+                    chosenteetime.Player1 = (Player) UserManager.GetUser(UserManager.GetUserId(player1Name));
+                }
+                if (chosenteetime.Player2 !=null && player2Name != null)
+                {
+                    chosenteetime.Player2 = (Player)UserManager.GetUser(UserManager.GetUserId(player2Name));
+                }
+                if (chosenteetime.Player3 != null && player3Name != null) 
+                {
+                    chosenteetime.Player3 = (Player)UserManager.GetUser(UserManager.GetUserId(player3Name));
+                }
+                if (chosenteetime.Player4 != null && player4Name != null)
+                {
+                    chosenteetime.Player4 = (Player)UserManager.GetUser(UserManager.GetUserId(player4Name));
+                }
+                Confirmation = RequestDirector.ReserveTeeTime(chosenteetime);
 
-            if (Confirmation)
-            {
-                Alert = $"Tee Time reserved successfully!";
+                if (Confirmation)
+                {
+                    Alert = $"Tee Time reserved successfully!";
+                }
             }
             return Page();
         }
